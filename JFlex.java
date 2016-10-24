@@ -15,28 +15,31 @@ import java.util.Scanner;
 
 /**
  *
- * @author Никита
+ * @author anastasiya
  */
 public class JFlex {
     public static void main(String[] args) throws IOException{
-       String l = "L.flex";
-       generarLexer(l);
-       lexemWriter();
-    }
-    public static void generarLexer(String path){
-        File file=new File(path);
+        String l = "L.flex";
+        Reader reader = null;
+        String yul = "";
+        File file=new File(l);
         jflex.Main.generate(file); 
-    } 
-   public static void lexemWriter() throws FileNotFoundException, IOException{
-      System.out.println("Название тестовго файла:");
-        Scanner in = new Scanner(System.in);
-        String your__path = in.nextLine();
-        Reader reader = new BufferedReader(new FileReader(your__path));
+        if(args.length == 0){
+            System.out.println("Название тестовго файла:");
+            Scanner in = new Scanner(System.in);
+            String your__path = in.nextLine();
+            reader = new BufferedReader(new FileReader(your__path));
+        }else{
+           
+           reader = new BufferedReader(new FileReader(args[0]));
+        }
+      
+       
         Lexer lexer = new Lexer (reader);
         while (true){
             String sflex = lexer.yylex();
             if(sflex == null){return;}
             else{System.out.print(sflex);}
         }
-    } 
+    }
 }
